@@ -1,0 +1,70 @@
+task build {
+    subprojects.each {
+        dependsOn("${it.path}:build")
+    }
+}
+
+task clean {
+    subprojects.each {
+        dependsOn("${it.path}:clean")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+}
+/*buildscript {
+    ext.compilerVersion = property('kotlin.version')
+    ext.librariesVersion = property('kotlin.version')
+    ext.serializationPluginVersion = property('plugin.version')
+    ext.eapChannel = 'https://dl.bintray.com/kotlin/kotlin-eap'
+    ext.serializationRepo = 'https://kotlin.bintray.com/kotlinx'
+
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url eapChannel }
+        maven { url serializationRepo }
+        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$compilerVersion"
+        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serializationPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:${property('konan.version')}"
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.6'
+    }
+}*/
+
+/*ext {
+    libraries = [
+            kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$librariesVersion",
+            kotlin_stdlib_common: "org.jetbrains.kotlin:kotlin-stdlib-common:$librariesVersion",
+            kotlin_stdlib_js: "org.jetbrains.kotlin:kotlin-stdlib-js:$librariesVersion",
+            kotlin_test: "org.jetbrains.kotlin:kotlin-test:$librariesVersion",
+            kotlin_test_junit: "org.jetbrains.kotlin:kotlin-test-junit:$librariesVersion",
+            kotlin_test_common: "org.jetbrains.kotlin:kotlin-test-common:$librariesVersion",
+            kotlin_test_annotations_common: "org.jetbrains.kotlin:kotlin-test-annotations-common:$librariesVersion",
+            kotlin_test_js: "org.jetbrains.kotlin:kotlin-test-js:$librariesVersion",
+            kotlin_reflect: "org.jetbrains.kotlin:kotlin-reflect:$librariesVersion",
+    ]
+}*/
+
+/*allprojects {
+    group 'org.jetbrains.kotlinx'
+
+    repositories {
+        jcenter()
+        mavenLocal()
+        maven { url eapChannel }
+        maven { url serializationRepo }
+    }
+}*/
+
+//apply plugin: 'kotlin'

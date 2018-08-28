@@ -1,0 +1,6 @@
+framework module KotlinChartDataParser {
+    umbrella header "KotlinChartDataParser.h"
+
+    export *
+    module * { export * }
+}

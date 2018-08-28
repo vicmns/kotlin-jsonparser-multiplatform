@@ -1,0 +1,21 @@
+include ':common'
+include ':ios'
+//project(":ios").name = "KotlinChartDataParser"
+
+def localProperties = new Properties()
+def localPropertiesFile = file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader { localProperties.load(it) }
+}
+
+// Don't create Android tasks if a user has no Android SDK.
+if (localProperties.containsKey("sdk.dir") || System.getenv('ANDROID_HOME') != null) {
+    include ':android'
+}
+
+rootProject.name = 'project-awesome-o'
+enableFeaturePreview('GRADLE_METADATA')
+
+def userHome = System.getProperty("user.home")
+//includeBuild "$userHome/kotlin-native/shared"
+//includeBuild "$userHome/kotlin-native/tools/kotlin-native-gradle-plugin"

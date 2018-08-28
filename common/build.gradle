@@ -1,0 +1,31 @@
+buildscript {
+    ext.kotlin_version = '1.2.61'
+    ext.serialization_version = '0.6.1'
+
+    repositories {
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
+    }
+}
+
+apply plugin: 'kotlin-platform-common'
+apply plugin: 'kotlinx-serialization'
+
+group = 'com.oracle.common.parser'
+
+repositories {
+    mavenCentral()
+    maven { url "https://kotlin.bintray.com/kotlinx" }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-jsonparser:$serialization_version"
+    testCompile  'junit:junit:4.12'
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.2.61"
+}
