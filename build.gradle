@@ -1,3 +1,32 @@
+buildscript {
+    ext.kotlin_version = property('kotlin.version')
+    ext.serialization_version = property('plugin.version')
+    ext.serializationRepo = "https://dl.bintray.com/kotlin/kotlinx/"
+    ext.serializationPluginVersion = property('plugin.version')
+    ext.kotlinx_coroutines_version='0.25.0'
+    ext.kotlinx_io_version='0.1.0-dev-15'
+    ext.konanVersion = property('konan.version')
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
+        maven { url serializationRepo }
+    }
+
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.1"
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
+        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:${konanVersion}"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
+        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
+    }
+}
+
 task build {
     subprojects.each {
         dependsOn("${it.path}:build")
@@ -11,60 +40,25 @@ task clean {
 }
 
 allprojects {
+
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url serializationRepo }
+    }
+
+    ext.packageName = "com.oracle.crossparser"
+    ext.versionMajor = 1
+    ext.versionMinor = 0
+    ext.versionPatch = 0
+    ext.ciVersion = System.getenv("BUILD_NUMBER") as Integer ?: 0
+    ext.isSnapshot = System.getenv("IS_RELEASE") as boolean ?: true
+    ext.libraryVersion = ciVersion > 0 ?
+            "${versionMajor}.${versionMinor}.${versionPatch}_${ciVersion}" :
+            "${versionMajor}.${versionMinor}.${versionPatch}"
+    if (isSnapshot) {
+        libraryVersion = libraryVersion + "-SNAPSHOT"
     }
 }
-/*buildscript {
-    ext.compilerVersion = property('kotlin.version')
-    ext.librariesVersion = property('kotlin.version')
-    ext.serializationPluginVersion = property('plugin.version')
-    ext.eapChannel = 'https://dl.bintray.com/kotlin/kotlin-eap'
-    ext.serializationRepo = 'https://kotlin.bintray.com/kotlinx'
-
-    repositories {
-        google()
-        jcenter()
-        mavenLocal()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url eapChannel }
-        maven { url serializationRepo }
-        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$compilerVersion"
-        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serializationPluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:${property('konan.version')}"
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.6'
-    }
-}*/
-
-/*ext {
-    libraries = [
-            kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$librariesVersion",
-            kotlin_stdlib_common: "org.jetbrains.kotlin:kotlin-stdlib-common:$librariesVersion",
-            kotlin_stdlib_js: "org.jetbrains.kotlin:kotlin-stdlib-js:$librariesVersion",
-            kotlin_test: "org.jetbrains.kotlin:kotlin-test:$librariesVersion",
-            kotlin_test_junit: "org.jetbrains.kotlin:kotlin-test-junit:$librariesVersion",
-            kotlin_test_common: "org.jetbrains.kotlin:kotlin-test-common:$librariesVersion",
-            kotlin_test_annotations_common: "org.jetbrains.kotlin:kotlin-test-annotations-common:$librariesVersion",
-            kotlin_test_js: "org.jetbrains.kotlin:kotlin-test-js:$librariesVersion",
-            kotlin_reflect: "org.jetbrains.kotlin:kotlin-reflect:$librariesVersion",
-    ]
-}*/
-
-/*allprojects {
-    group 'org.jetbrains.kotlinx'
-
-    repositories {
-        jcenter()
-        mavenLocal()
-        maven { url eapChannel }
-        maven { url serializationRepo }
-    }
-}*/
-
-//apply plugin: 'kotlin'

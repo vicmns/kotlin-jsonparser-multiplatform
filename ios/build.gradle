@@ -1,24 +1,4 @@
-buildscript {
-    ext.serializationRepo = "https://dl.bintray.com/kotlin/kotlinx/"
-    ext.kotlin_version = property('kotlin.version')
-    ext.serializationPluginVersion = property('plugin.version')
-    ext.konanVersion = property('konan.version')
-
-    repositories {
-        jcenter()
-        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
-        //maven { url "https://teamcity.jetbrains.com/guestAuth/app/rest/builds/buildType:(id:Kotlin_13M1_Compiler),number:1.3-M1-eap-77,branch:default:any/artifacts/content/maven/" }
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:${konanVersion}"
-    }
-}
-
-repositories {
-    maven { url serializationRepo }
-}
+import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'kotlin-platform-native'
 
@@ -36,19 +16,65 @@ apply plugin: 'kotlin-platform-native'
      }
  }
 
-//apply plugin: 'konan'
-//apply plugin: 'kotlin-platform-native'
-
-/*konan.targets = ['iphone', 'iphone_sim']
-
-konanArtifacts {
-    framework('KotlinChartDataParser') {
-        enableMultiplatform true
-    }
-}*/
-
 
 dependencies {
     implementation "org.jetbrains.kotlinx:jsonparser-native:${serializationPluginVersion}"
     expectedBy project(':common')
 }
+
+task copyDebugArmFramework(type: Copy) {
+    from "${buildDir}/lib/main/debug/ios_arm64/KotlinChartDataParser.framework"
+    into "${buildDir}/lib/main/debug/universal/KotlinChartDataParser.framework"
+}
+
+task copyReleaseArmFramework(type: Copy) {
+    from "${buildDir}/lib/main/release/ios_arm64/KotlinChartDataParser.framework"
+    into "${buildDir}/lib/main/release/universal/KotlinChartDataParser.framework"
+}
+
+task buildUniversalFramework() {
+    group 'build'
+    description 'Create a universal framework from x86 and ARM framework'
+
+    doFirst {
+        def debugDir = file("${project.buildDir}/lib/main/debug/universal")
+        def releaseDir = file("${project.buildDir}/lib/main/release/universal")
+        debugDir.mkdirs()
+        releaseDir.mkdirs()
+    }
+
+    doLast {
+        if (Os.isFamily(Os.FAMILY_MAC)) {
+            println 'Creating debug framework'
+            exec {
+                executable "sh"
+                args "-c","lipo -create -output " +
+                        "${project.buildDir}/lib/main/debug/universal/KotlinChartDataParser.framework/KotlinChartDataParser " +
+                        "${project.buildDir}/lib/main/debug/ios_x64/KotlinChartDataParser.framework/KotlinChartDataParser " +
+                        "${project.buildDir}/lib/main/debug/ios_arm64/KotlinChartDataParser.framework/KotlinChartDataParser"
+            }
+            println 'Creating release framework'
+            exec {
+                executable "sh"
+                args "-c","lipo -create -output " +
+                        "${project.buildDir}/lib/main/release/universal/KotlinChartDataParser.framework/KotlinChartDataParser " +
+                        "${project.buildDir}/lib/main/release/ios_x64/KotlinChartDataParser.framework/KotlinChartDataParser " +
+                        "${project.buildDir}/lib/main/release/ios_arm64/KotlinChartDataParser.framework/KotlinChartDataParser"
+            }
+        } else {
+            println "Universal framework creation it's only available on OSX systems"
+        }
+
+    }
+}
+
+task packageDistribution(type: Zip) {
+    archiveName = "KotlinChartDataParser.zip"
+    destinationDir = file("${buildDir}/dist")
+
+    from "${buildDir}/lib/main/release/universal/KotlinChartDataParser.framework"
+}
+
+buildUniversalFramework.dependsOn copyDebugArmFramework, copyReleaseArmFramework
+build.dependsOn buildUniversalFramework
+build.dependsOn packageDistribution
