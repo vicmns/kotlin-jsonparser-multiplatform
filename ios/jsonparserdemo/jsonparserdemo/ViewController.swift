@@ -13,8 +13,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let parser = KCDPTestJsonParser()
-        let testData: KCDPTestData = parser.parseJSONFromString(response: "{\"userName\": \"John Dow\", \"message\": \"Hello from JSON!\", \"userId\": \"1231412\"}")
+        let parser = TestJsonParser()
+        let testData: TestData = parser.parseJSONFromString(response: "{\"userName\": \"John Dow\", \"message\": \"Hello from JSON!\", \"userId\": \"1231412\"}")
         //See the response on the console!
         print(testData)
     }

@@ -1,29 +1,24 @@
 buildscript {
-    ext.kotlin_version = property('kotlin.version')
-    ext.serialization_version = property('plugin.version')
-    ext.serializationRepo = "https://dl.bintray.com/kotlin/kotlinx/"
-    ext.serializationPluginVersion = property('plugin.version')
-    ext.kotlinx_coroutines_version='0.25.0'
-    ext.kotlinx_io_version='0.1.0-dev-15'
-    ext.konanVersion = property('konan.version')
+    ext.kotlin_version = property('kotlin_version')
+    ext.serialization_plugin_version = property('serialization_plugin_version')
+    ext.seralization_plugin = property('serialization_version')
+    ext.konan_version = property('konan_version')
 
     repositories {
         google()
         jcenter()
         mavenCentral()
-        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url "http://kotlin.bintray.com/kotlinx" }
         maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
-        maven { url serializationRepo }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 
     dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.1"
         classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
-        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:${konanVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$serialization_plugin_version"
+        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:$konan_version"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
-        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
     }
 }
 
@@ -40,13 +35,16 @@ task clean {
 }
 
 allprojects {
+    apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'maven-publish'
 
     repositories {
         google()
         jcenter()
         mavenCentral()
+        maven { url "http://kotlin.bintray.com/kotlinx" }
         maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url serializationRepo }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 
     ext.packageName = "com.oracle.crossparser"

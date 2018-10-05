@@ -1,6 +1,5 @@
 include ':common'
 include ':ios'
-//project(":ios").name = "KotlinChartDataParser"
 
 def localProperties = new Properties()
 def localPropertiesFile = file('local.properties')
@@ -13,9 +12,7 @@ if (localProperties.containsKey("sdk.dir") || System.getenv('ANDROID_HOME') != n
     include ':android'
 }
 
-rootProject.name = 'project-awesome-o'
+rootProject.name = 'kotlin-jsonparser-multiplatform'
 enableFeaturePreview('GRADLE_METADATA')
 
 def userHome = System.getProperty("user.home")
-//includeBuild "$userHome/kotlin-native/shared"
-//includeBuild "$userHome/kotlin-native/tools/kotlin-native-gradle-plugin"

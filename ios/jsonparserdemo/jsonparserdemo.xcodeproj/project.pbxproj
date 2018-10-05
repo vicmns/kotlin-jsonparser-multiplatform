@@ -12,18 +12,18 @@
 		EE63AB3C2135A0380076D6EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE63AB3A2135A0380076D6EE /* Main.storyboard */; };
 		EE63AB3E2135A0390076D6EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE63AB3D2135A0390076D6EE /* Assets.xcassets */; };
 		EE63AB412135A0390076D6EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE63AB3F2135A0390076D6EE /* LaunchScreen.storyboard */; };
-		EE63AB4A2135A4A50076D6EE /* KotlinChartDataParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE63AB482135A4980076D6EE /* KotlinChartDataParser.framework */; };
-		EE63AB4B2135A4A50076D6EE /* KotlinChartDataParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE63AB482135A4980076D6EE /* KotlinChartDataParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EEAE45A62167CCFF0024D573 /* KotlinChartDataParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEAE45A22167CCAA0024D573 /* KotlinChartDataParser.framework */; };
+		EEAE45A72167CCFF0024D573 /* KotlinChartDataParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EEAE45A22167CCAA0024D573 /* KotlinChartDataParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EE63AB4C2135A4A50076D6EE /* Embed Frameworks */ = {
+		EEAE45A82167CCFF0024D573 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EE63AB4B2135A4A50076D6EE /* KotlinChartDataParser.framework in Embed Frameworks */,
+				EEAE45A72167CCFF0024D573 /* KotlinChartDataParser.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,7 +38,7 @@
 		EE63AB3D2135A0390076D6EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE63AB402135A0390076D6EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE63AB422135A0390076D6EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE63AB482135A4980076D6EE /* KotlinChartDataParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KotlinChartDataParser.framework; sourceTree = "<group>"; };
+		EEAE45A22167CCAA0024D573 /* KotlinChartDataParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KotlinChartDataParser.framework; path = jsonparserdemo/KotlinChartDataParser.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE63AB4A2135A4A50076D6EE /* KotlinChartDataParser.framework in Frameworks */,
+				EEAE45A62167CCFF0024D573 /* KotlinChartDataParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +56,7 @@
 		EE63AB2A2135A0380076D6EE = {
 			isa = PBXGroup;
 			children = (
-				EE63AB482135A4980076D6EE /* KotlinChartDataParser.framework */,
+				EEAE45A22167CCAA0024D573 /* KotlinChartDataParser.framework */,
 				EE63AB352135A0380076D6EE /* jsonparserdemo */,
 				EE63AB342135A0380076D6EE /* Products */,
 			);
@@ -93,7 +93,7 @@
 				EE63AB2F2135A0380076D6EE /* Sources */,
 				EE63AB302135A0380076D6EE /* Frameworks */,
 				EE63AB312135A0380076D6EE /* Resources */,
-				EE63AB4C2135A4A50076D6EE /* Embed Frameworks */,
+				EEAE45A82167CCFF0024D573 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -303,7 +303,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/jsonparserdemo",
 				);
 				INFOPLIST_FILE = jsonparserdemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -324,7 +324,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/jsonparserdemo",
 				);
 				INFOPLIST_FILE = jsonparserdemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

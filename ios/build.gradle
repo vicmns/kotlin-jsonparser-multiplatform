@@ -7,18 +7,18 @@ apply plugin: 'kotlin-platform-native'
          //kotlin.srcDir '../common/src/main/kotlin'
          component {
              outputKinds = [FRAMEWORK]
-             target 'ios_arm64', 'ios_x64'
+             targets = ['ios_arm64', 'ios_x64']
              baseName = "KotlinChartDataParser"
          }
      }
      test.component {
-         target 'ios_x64', 'ios_arm64'
+         targets = ['ios_x64', 'ios_arm64']
      }
  }
 
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:jsonparser-native:${serializationPluginVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${serialization_version}"
     expectedBy project(':common')
 }
 
